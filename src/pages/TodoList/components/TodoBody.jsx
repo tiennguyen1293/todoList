@@ -6,6 +6,7 @@ import TodoItem from 'commons/TodoItem/TodoItem';
 const TableBody = styled.ul`
   display: flex;
   flex-direction: column;
+  padding-left: 24px;
 
   ${props =>
     props.isScroll
