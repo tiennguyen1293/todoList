@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { STATUS } from 'contants';
+import { STATUS } from 'utils/contants';
 import Button from 'commons/Button/Button';
 
 const ButtonToggle = styled(Button)`
@@ -27,7 +27,7 @@ class ButtonGroup extends React.PureComponent {
       todoList,
       toggleStatusAll,
       statusCurrent,
-      setFilterStatus,
+      setCurrentStatus,
     } = this.props;
 
     return (
@@ -44,7 +44,7 @@ class ButtonGroup extends React.PureComponent {
             data-testid="all-button"
             isActive={!statusCurrent}
             disabled={!statusCurrent}
-            onClick={() => setFilterStatus('')}
+            onClick={() => setCurrentStatus('')}
           >
             All
           </ButtonStatus>
@@ -52,7 +52,7 @@ class ButtonGroup extends React.PureComponent {
             data-testid="active-button"
             isActive={statusCurrent === STATUS.ACTIVE}
             disabled={statusCurrent === STATUS.ACTIVE}
-            onClick={() => setFilterStatus(STATUS.ACTIVE)}
+            onClick={() => setCurrentStatus(STATUS.ACTIVE)}
           >
             Active
           </ButtonStatus>
@@ -60,7 +60,7 @@ class ButtonGroup extends React.PureComponent {
             data-testid="done-button"
             isActive={statusCurrent === STATUS.DONE}
             disabled={statusCurrent === STATUS.DONE}
-            onClick={() => setFilterStatus(STATUS.DONE)}
+            onClick={() => setCurrentStatus(STATUS.DONE)}
           >
             Done
           </ButtonStatus>

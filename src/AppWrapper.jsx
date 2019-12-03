@@ -42,12 +42,8 @@ function AppWrapper() {
 
         <Router>
           <Switch>
-            <Route exact path="/">
-              <AsyncHome />
-            </Route>
-            <Route path="*">
-              <AsyncHome />
-            </Route>
+            <Route exact path="/" component={AsyncHome} />
+            <Route path="*" component={AsyncHome} />
           </Switch>
         </Router>
 

@@ -22,7 +22,7 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     color: ${props => props.theme.secondary};
     font-size: ${props => props.theme.fontSize};
-    background: ${props => props.theme.primary};
+    background-color: ${props => props.theme.background};
   }
 
   input,

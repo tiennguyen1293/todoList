@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { STATUS } from 'contants';
+import { STATUS } from 'utils/contants';
 
 import Button from 'commons/Button/Button';
 
@@ -21,12 +21,11 @@ const TitleTodo = styled.span`
   cursor: pointer;
 
   ${props =>
-    props.status === STATUS.DONE
-      ? `
-        color: ${props.theme.red};
-        text-decoration: line-through
-      `
-      : ''};
+    props.isDone &&
+    `
+      color: ${props.theme.red};
+      text-decoration: line-through
+    `};
 `;
 
 class TodoItem extends React.PureComponent {
@@ -41,7 +40,7 @@ class TodoItem extends React.PureComponent {
       >
         <TitleTodo
           data-testid="todo-item__title"
-          status={model.status}
+          isDone={model.status === STATUS.DONE}
           onClick={() => handleEditTodo(model)}
         >
           {model.title}

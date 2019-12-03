@@ -14,6 +14,27 @@ describe('TodoList', () => {
     expect(noResult.textContent).toBe('No Result');
   });
 
+  it('prevent user Enter when value is null', () => {
+    const { getByTestId } = render(<TodoList />, {
+      wrapper: MemoryRouter,
+    });
+
+    fireEvent.change(getByTestId('input-add-todo'), {
+      target: {
+        value: '',
+      },
+    });
+    expect(getByTestId('input-add-todo').value).toBe('');
+
+    fireEvent.keyDown(getByTestId('input-add-todo'), {
+      key: 'Enter',
+      code: 13,
+    });
+
+    expect(getByTestId('input-add-todo').value).toBe('');
+    expect(getByTestId('no-result').textContent).toBe('No Result');
+  });
+
   it('should add todoItem when user Enter', () => {
     const { getByTestId } = render(<TodoList />, {
       wrapper: MemoryRouter,

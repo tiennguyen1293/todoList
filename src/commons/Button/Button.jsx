@@ -10,7 +10,8 @@ const ButtonComponent = styled.button.attrs(props => ({
   border-radius: 4px;
   font-size: ${props => props.fontSize || props.theme.fontSize};
   color: ${props => props.color || props.theme.black};
-  background-color: ${props => props.backgroundColor};
+  background-color: ${props =>
+    props.backgroundColor || props.theme.backgroundColor};
   border: 1px solid ${props => props.borderColor || props.theme.secondary};
   cursor: pointer;
 

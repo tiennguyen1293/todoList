@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { MAX_ITEM } from 'contants';
-
 import TodoItem from 'commons/TodoItem/TodoItem';
 
 const TableBody = styled.ul`
   display: flex;
   flex-direction: column;
-  padding: 16px;
 
   ${props =>
     props.isScroll
@@ -31,13 +28,14 @@ class TodoBody extends React.PureComponent {
       handleEditTodo,
       todoItemRef,
       heightTableBody,
+      isScroll,
     } = this.props;
 
     return (
       <TableBody
         data-testid="todo-list"
-        data-scroll={todoList.length >= MAX_ITEM}
-        isScroll={todoList.length >= MAX_ITEM}
+        data-scroll={isScroll}
+        isScroll={isScroll}
         height={heightTableBody}
       >
         {todoList.map(todo => (
