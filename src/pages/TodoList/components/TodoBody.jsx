@@ -44,8 +44,8 @@ class TodoBody extends React.PureComponent {
             <TodoItem
               todoItemRef={todoItemRef}
               model={todo}
-              handleRemoveTodo={idTodo => handleRemoveTodo(idTodo)}
-              handleEditTodo={todo => handleEditTodo(todo)}
+              onDelete={idTodo => handleRemoveTodo(idTodo)}
+              onClickTitle={todo => handleEditTodo(todo)}
             />
           </TableRow>
         ))}

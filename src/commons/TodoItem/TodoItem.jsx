@@ -30,7 +30,7 @@ const TitleTodo = styled.span`
 
 class TodoItem extends React.PureComponent {
   render() {
-    const { todoItemRef, model, handleEditTodo, handleRemoveTodo } = this.props;
+    const { todoItemRef, model, onClickTitle, onDelete } = this.props;
 
     return (
       <WrapperTodoItem
@@ -41,14 +41,14 @@ class TodoItem extends React.PureComponent {
         <TitleTodo
           data-testid="todo-item__title"
           isDone={model.status === STATUS.DONE}
-          onClick={() => handleEditTodo(model)}
+          onClick={() => onClickTitle(model)}
         >
           {model.title}
         </TitleTodo>
         <Button
           data-testid="todo-item__remove"
           type="button"
-          onClick={() => handleRemoveTodo(model.id)}
+          onClick={() => onDelete(model.id)}
         >
           ×
         </Button>
