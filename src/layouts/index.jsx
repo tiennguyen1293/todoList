@@ -5,13 +5,16 @@ import styled from 'styled-components';
 import Loading from 'commons/Loading/Loading';
 
 const LayoutWrapper = styled.main`
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  width: 90vw;
+  margin: 64px auto;
+
+  @media screen and (min-width: 768px){
+    width: 50vw;
+  }
 `;
 
 
-export const Layout = ({ children, loading, location, ...props }) => {
+export const Layout = ({ children, loading, location }) => {
   const childrenWithProps = React.Children.map(children, child => {
     return React.cloneElement(child, { location });
   });
