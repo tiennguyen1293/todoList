@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import TodoItem from 'commons/TodoItem/TodoItem';
 
 const TableBody = styled.ul`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding-left: 24px;
@@ -11,9 +12,10 @@ const TableBody = styled.ul`
   ${props =>
     props.isScroll
       ? `
-        height: ${props.height}px;
-        overflow: auto;
-      `
+    height: ${props.height}px;
+    overflow: auto;
+    box-shadow: inset 0 -10px 10px -10px ${props.theme.secondary};
+  `
       : ''}
 `;
 
