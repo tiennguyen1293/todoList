@@ -7,6 +7,12 @@ export default createGlobalStyle`
     padding: 0;
   }
 
+  body,
+  html {
+    height: 100%;
+    width: 100%;
+  }
+
   html {
     font-family: ${props => props.theme.fontFamily};
     font-size: 62.5%;
@@ -14,13 +20,16 @@ export default createGlobalStyle`
 
   body {
     -webkit-font-smoothing: antialiased;
-    color: ${props => props.theme.black};
+    color: ${props => props.theme.secondary};
     font-size: ${props => props.theme.fontSize};
+    background: ${props => props.theme.primary};
   }
 
-  body,
-  html {
-    height: 100%;
-    width: 100%;
+  input,
+  button {
+    &:focus,
+    &:active {
+      outline: 0;
+    }
   }
 `;

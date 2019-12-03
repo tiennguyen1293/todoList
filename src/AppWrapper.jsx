@@ -42,8 +42,12 @@ function AppWrapper() {
 
         <Router>
           <Switch>
-            <Route exact path="/" component={AsyncHome} />
-            <Route render={() => <div>404 page</div>} />
+            <Route exact path="/">
+              <AsyncHome />
+            </Route>
+            <Route path="*">
+              <AsyncHome />
+            </Route>
           </Switch>
         </Router>
 
