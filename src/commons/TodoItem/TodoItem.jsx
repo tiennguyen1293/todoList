@@ -7,9 +7,9 @@ import Button from 'commons/Button/Button';
 
 const WrapperTodoItem = styled.div`
   display: flex;
-  margin-bottom: 8px;
   justify-content: space-between;
   align-items: center;
+  margin: 4px 0;
 `;
 
 const TitleTodo = styled.span`
@@ -17,7 +17,7 @@ const TitleTodo = styled.span`
   display: inline-block;
   font-size: ${props => props.theme.fontSize};
   color: ${props => props.theme.secondary};
-  padding: 8px 4px;
+  padding: 10px 4px;
   cursor: pointer;
 
   ${props =>
