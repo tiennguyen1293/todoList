@@ -13,28 +13,29 @@ const InputSearch = styled.input`
 function InputBaseComponent(props) {
   const { type, placeholder, onSubmit, onKeyDown, onChange } = props;
 
-  const [todoNameCurrent, setTodoName] = useState('');
+  const [value, setValueInput] = useState('');
 
   const handleKeyDown = e => {
     if (e.key === 'Enter' && typeof onSubmit === 'function') {
-      onSubmit(todoNameCurrent);
-      setTodoName('');
+      onSubmit(value);
+      setValueInput('');
     }
     onKeyDown && onKeyDown(e);
   };
 
   const handleChange = value => {
     typeof onChange === 'function' && onChange(value);
-    setTodoName(value);
+    setValueInput(value);
   };
 
   return (
     <InputSearch
+      data-testid="input"
       type={type}
       placeholder={placeholder}
       onKeyDown={e => handleKeyDown(e)}
       onChange={e => handleChange(e.target.value)}
-      value={todoNameCurrent}
+      value={value}
       {...props}
     />
   );

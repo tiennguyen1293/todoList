@@ -34,11 +34,23 @@ class TodoItem extends React.PureComponent {
     const { todoItemRef, model, handleEditTodo, handleRemoveTodo } = this.props;
 
     return (
-      <WrapperTodoItem ref={todoItemRef}>
-        <TitleTodo status={model.status} onClick={() => handleEditTodo(model)}>
+      <WrapperTodoItem
+        ref={todoItemRef}
+        data-status={model.status}
+        data-testid="todo-item"
+      >
+        <TitleTodo
+          data-testid="todo-item__title"
+          status={model.status}
+          onClick={() => handleEditTodo(model)}
+        >
           {model.title}
         </TitleTodo>
-        <Button type="button" onClick={() => handleRemoveTodo(model.id)}>
+        <Button
+          data-testid="todo-item__remove"
+          type="button"
+          onClick={() => handleRemoveTodo(model.id)}
+        >
           ×
         </Button>
       </WrapperTodoItem>

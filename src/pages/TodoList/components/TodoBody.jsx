@@ -23,29 +23,36 @@ const TableRow = styled.li`
   width: 100%;
 `;
 
-const TodoBody = ({
-  todoList,
-  handleRemoveTodo,
-  handleEditTodo,
-  todoItemRef,
-  heightTableBody,
-}) => {
-  return (
-    <TableBody isScroll={todoList.length >= MAX_ITEM} height={heightTableBody}>
-      {todoList.length > 0
-        ? todoList.map(todo => (
-            <TableRow key={todo.id}>
-              <TodoItem
-                todoItemRef={todoItemRef}
-                model={todo}
-                handleRemoveTodo={idTodo => handleRemoveTodo(idTodo)}
-                handleEditTodo={todo => handleEditTodo(todo)}
-              />
-            </TableRow>
-          ))
-        : 'No Result'}
-    </TableBody>
-  );
-};
+class TodoBody extends React.PureComponent {
+  render() {
+    const {
+      todoList,
+      handleRemoveTodo,
+      handleEditTodo,
+      todoItemRef,
+      heightTableBody,
+    } = this.props;
+
+    return (
+      <TableBody
+        data-testid="todo-list"
+        data-scroll={todoList.length >= MAX_ITEM}
+        isScroll={todoList.length >= MAX_ITEM}
+        height={heightTableBody}
+      >
+        {todoList.map(todo => (
+          <TableRow key={todo.id}>
+            <TodoItem
+              todoItemRef={todoItemRef}
+              model={todo}
+              handleRemoveTodo={idTodo => handleRemoveTodo(idTodo)}
+              handleEditTodo={todo => handleEditTodo(todo)}
+            />
+          </TableRow>
+        ))}
+      </TableBody>
+    );
+  }
+}
 
 export default TodoBody;

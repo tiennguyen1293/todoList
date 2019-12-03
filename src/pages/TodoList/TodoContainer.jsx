@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { defaultItem } from 'utils';
 import { STATUS, MAX_ITEM } from 'contants';
 
@@ -8,33 +8,43 @@ function toggleStatus(todo) {
 
 function useTodoList() {
   const [todoList, setAddTodo] = useState([]);
+  const handleAddTodo = useCallback(
+    nameTodo => {
+      if (nameTodo) {
+        const newTodo = defaultItem({
+          title: nameTodo,
+        });
+        const todoUpdated = [...todoList, newTodo];
 
-  const handleAddTodo = nameTodo => {
-    const newTodo = defaultItem({
-      title: nameTodo,
-    });
-    const todoUpdated = [...todoList, newTodo];
+        setAddTodo(todoUpdated);
+      }
+    },
+    [todoList],
+  );
 
-    setAddTodo(todoUpdated);
-  };
+  const handleEditTodo = useCallback(
+    newTodo => {
+      const todoListUpdated = todoList.map(todo =>
+        todo.id === newTodo.id
+          ? {
+              ...todo,
+              status: toggleStatus(todo),
+            }
+          : todo,
+      );
 
-  const handleEditTodo = newTodo => {
-    const todoListUpdated = todoList.map(todo =>
-      todo.id === newTodo.id
-        ? {
-            ...todo,
-            status: toggleStatus(todo),
-          }
-        : todo,
-    );
+      setAddTodo(todoListUpdated);
+    },
+    [todoList],
+  );
 
-    setAddTodo(todoListUpdated);
-  };
-
-  const handleRemoveTodo = id => {
-    const todoListFiltered = todoList.filter(todo => todo.id !== id);
-    setAddTodo(todoListFiltered);
-  };
+  const handleRemoveTodo = useCallback(
+    id => {
+      const todoListFiltered = todoList.filter(todo => todo.id !== id);
+      setAddTodo(todoListFiltered);
+    },
+    [todoList],
+  );
 
   return [
     todoList,
@@ -45,29 +55,16 @@ function useTodoList() {
   ];
 }
 
-const withTodoListHOC = WrappedComponent => props => {
-  const todoItemRef = useRef(null);
-  const [heightTableBody, setHeightScroll] = useState(0);
-  if (todoItemRef && todoItemRef.current && !heightTableBody) {
-    setHeightScroll(todoItemRef.current.clientHeight * (MAX_ITEM + 1));
-  }
-  const [
-    todoList,
-    handleAddTodo,
-    handleEditTodo,
-    handleRemoveTodo,
-    setAddTodo,
-  ] = useTodoList([]);
+function useFilterTodo([todoList, setAddTodo]) {
   const [statusCurrent, setFilterStatus] = useState('');
-
-  const handleFilterTodo = () => {
+  const handleFilterTodo = useCallback(() => {
     return todoList.filter(todo =>
       statusCurrent ? todo.status === statusCurrent : todo,
     );
-  };
+  }, [statusCurrent, todoList]);
   const todoListFiltered = handleFilterTodo();
-  const toggleStatusAll = () => {
-    let todoListUpdated = todoListFiltered;
+  const toggleStatusAll = useCallback(() => {
+    let todoListUpdated = [...todoListFiltered];
 
     if (!statusCurrent) {
       todoListUpdated = todoListFiltered.map(todo => ({
@@ -87,11 +84,35 @@ const withTodoListHOC = WrappedComponent => props => {
     }
 
     setAddTodo(todoListUpdated);
-  };
+  }, [setAddTodo, statusCurrent, todoList, todoListFiltered]);
+
+  return [todoListFiltered, setFilterStatus, toggleStatusAll, statusCurrent];
+}
+
+const withTodoListHOC = WrappedComponent => props => {
+  const [
+    todoList,
+    handleAddTodo,
+    handleEditTodo,
+    handleRemoveTodo,
+    setAddTodo,
+  ] = useTodoList([]);
+  const [
+    todoListFiltered,
+    setFilterStatus,
+    toggleStatusAll,
+    statusCurrent,
+  ] = useFilterTodo([todoList, setAddTodo]);
+  const todoItemRef = useRef(null);
+  const [heightTableBody, setHeightScroll] = useState(0);
+  useEffect(() => {
+    if (todoItemRef && todoItemRef.current) {
+      setHeightScroll(todoItemRef.current.clientHeight * (MAX_ITEM + 1));
+    }
+  }, [handleAddTodo]);
 
   return (
     <WrappedComponent
-      {...props}
       todoList={todoListFiltered}
       handleAddTodo={handleAddTodo}
       handleEditTodo={handleEditTodo}

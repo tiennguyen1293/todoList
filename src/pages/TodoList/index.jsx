@@ -39,11 +39,13 @@ function TodoList({
     <Layout>
       <Header>
         <InputBase
+          data-testid="input-add-todo"
           type="text"
           placeholder="Enter todo name here"
           onSubmit={nameTodo => handleAddTodo(nameTodo)}
         />
       </Header>
+
       <Table>
         {todoList.length > 0 ? (
           <TodoBody
@@ -54,7 +56,7 @@ function TodoList({
             heightTableBody={heightTableBody}
           />
         ) : (
-          <Paragraph>No Result</Paragraph>
+          <Paragraph data-testid="no-result">No Result</Paragraph>
         )}
       </Table>
 
